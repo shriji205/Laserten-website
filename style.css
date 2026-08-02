@@ -7145,3 +7145,39 @@ textarea.form-control {
         width: 100%;
     }
 }
+
+/* --- Hero Marquee --- */
+.hero-marquee-container {
+    width: 100%;
+    overflow: hidden;
+    margin-top: 5vh;
+    margin-bottom: auto;
+    z-index: 10;
+    padding: 10px 0;
+    opacity: 0.8;
+}
+
+.hero-marquee-content {
+    display: inline-block;
+    white-space: nowrap;
+    animation: heroMarquee 25s linear infinite;
+}
+
+.hero-marquee-content span {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin: 0 20px;
+}
+
+.hero-marquee-content .marquee-dot {
+    color: var(--white);
+    opacity: 0.5;
+    margin: 0 10px;
+}
+
+@keyframes heroMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
