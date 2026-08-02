@@ -212,83 +212,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 3D Infinite Carousel Logic (Enhanced with Stochastic Filtering) ---
+    // --- Horizontal Scroll Carousel Logic ---
     const carousels = document.querySelectorAll('.carousel-3d-section');
     carousels.forEach(carousel => {
         const track = carousel.querySelector('.carousel-3d-track');
         let allItems = Array.from(carousel.querySelectorAll('.carousel-3d-item'));
         const prevBtn = carousel.querySelector('.prev-3d');
         const nextBtn = carousel.querySelector('.next-3d');
-        const dotContainer = carousel.querySelector('.carousel-dots');
         const filterTabs = carousel.querySelectorAll('.filter-tab');
 
         if (!track || allItems.length === 0) return;
 
-        let currentIndex = 0;
-        let visibleItems = [...allItems];
-        let autoPlay;
-
-        function updateCarousel() {
-            visibleItems.forEach((item, index) => {
-                item.classList.remove('active', 'prev', 'next', 'prev-hidden', 'next-hidden', 'shuffling');
-
-                if (index === currentIndex) {
-                    item.classList.add('active');
-                } else if (index === (currentIndex - 1 + visibleItems.length) % visibleItems.length) {
-                    item.classList.add('prev');
-                } else if (index === (currentIndex + 1) % visibleItems.length) {
-                    item.classList.add('next');
-                } else {
-                    const diff = index - currentIndex;
-                    if (diff < 0 || (currentIndex === 0 && index === visibleItems.length - 1)) {
-                        item.classList.add('prev-hidden');
-                    } else {
-                        item.classList.add('next-hidden');
-                    }
-                }
-            });
-
-            if (dotContainer) {
-                dotContainer.innerHTML = '';
-                visibleItems.forEach((_, i) => {
-                    const dot = document.createElement('div');
-                    dot.classList.add('dot');
-                    if (i === currentIndex) dot.classList.add('active');
-                    dot.addEventListener('click', () => {
-                        currentIndex = i;
-                        updateCarousel();
-                        resetAutoPlay();
-                    });
-                    dotContainer.appendChild(dot);
-                });
-            }
-        }
-
         function filterCategory(category) {
             carousel.setAttribute('data-theme', category);
 
-            // Random Shuffle Animation Initiation
-            visibleItems.forEach(item => item.classList.add('shuffling'));
-
-            setTimeout(() => {
-                visibleItems = allItems.filter(item => {
-                    const match = category === 'all' || item.getAttribute('data-category') === category;
-                    if (match) {
-                        item.classList.remove('filtered-out');
-                    } else {
-                        item.classList.add('filtered-out');
-                    }
-                    return match;
-                });
-
-                currentIndex = 0;
-                updateCarousel();
-
-                // Entrance animation for visible items
-                visibleItems.forEach((item, i) => {
-                    item.style.animationDelay = `${i * 0.1}s`;
-                });
-            }, 300);
+            allItems.forEach(item => {
+                const match = category === 'all' || item.getAttribute('data-category') === category;
+                if (match) {
+                    item.classList.remove('filtered-out');
+                } else {
+                    item.classList.add('filtered-out');
+                }
+            });
+            // Scroll back to start
+            track.scrollTo({ left: 0, behavior: 'smooth' });
         }
 
         filterTabs.forEach(tab => {
@@ -299,47 +246,84 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        const nextSlide = () => {
-            if (visibleItems.length === 0) return;
-            currentIndex = (currentIndex + 1) % visibleItems.length;
-            updateCarousel();
+        const getScrollAmount = () => {
+            const firstVisibleItem = allItems.find(item => !item.classList.contains('filtered-out'));
+            if (!firstVisibleItem) return 0;
+            const gap = 32; // 2rem
+            return firstVisibleItem.offsetWidth + gap;
         };
 
-        const prevSlide = () => {
-            if (visibleItems.length === 0) return;
-            currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
-            updateCarousel();
-        };
-
-        if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
-        if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
-
-        // Touch Swipe Support
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        track.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            clearInterval(autoPlay);
-        }, { passive: true });
-
-        track.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-            resetAutoPlay();
-        }, { passive: true });
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            if (touchEndX < touchStartX - swipeThreshold) {
-                nextSlide();
-            } else if (touchEndX > touchStartX + swipeThreshold) {
-                prevSlide();
-            }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+            });
         }
 
-        resetAutoPlay();
-        updateCarousel();
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+            });
+        }
+
+        // AutoPlay Logic
+        let autoPlayInterval;
+        const startAutoPlay = () => {
+            autoPlayInterval = setInterval(() => {
+                // Check if we've reached the end
+                if (Math.ceil(track.scrollLeft + track.clientWidth) >= track.scrollWidth) {
+                    track.scrollTo({ left: 0, behavior: 'smooth' }); // Loop back to start
+                } else {
+                    track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+                }
+            }, 1000); // Scroll every 1 second
+        };
+
+        const stopAutoPlay = () => clearInterval(autoPlayInterval);
+
+        // Initialize AutoPlay
+        startAutoPlay();
+
+        // Pause on interaction
+        track.addEventListener('mouseenter', stopAutoPlay);
+        track.addEventListener('touchstart', stopAutoPlay, { passive: true });
+        // Resume when interaction stops (handled by mouseleave in drag logic below and touchend)
+        track.addEventListener('touchend', startAutoPlay, { passive: true });
+
+        // Drag to scroll functionality
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        track.addEventListener('mousedown', (e) => {
+            isDown = true;
+            track.style.cursor = 'grabbing';
+            track.style.scrollBehavior = 'auto'; // Disable smooth scroll while dragging
+            startX = e.pageX - track.offsetLeft;
+            scrollLeft = track.scrollLeft;
+        });
+
+        track.addEventListener('mouseleave', () => {
+            isDown = false;
+            track.style.cursor = 'grab';
+            track.style.scrollBehavior = 'smooth';
+            startAutoPlay();
+        });
+
+        track.addEventListener('mouseup', () => {
+            isDown = false;
+            track.style.cursor = 'grab';
+            track.style.scrollBehavior = 'smooth';
+        });
+
+        track.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - track.offsetLeft;
+            const walk = (x - startX) * 2; // Scroll faster
+            track.scrollLeft = scrollLeft - walk;
+        });
+
+        track.style.cursor = 'grab';
     });
 
     // --- Hero Product Fan-Out Auto-Cycle ---
