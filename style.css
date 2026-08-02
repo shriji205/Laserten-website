@@ -1309,23 +1309,62 @@ h3 {
 
 .hero-content {
     position: relative;
-    z-index: 3;
-    max-width: 650px;
+    z-index: 15;
+    max-width: 900px;
     padding: 0;
+    text-align: center;
     animation: luxuryFadeIn 2.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
 }
 
 .hero-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 100%;
-    max-width: 1800px;
-    margin: 0 auto;
+    height: 100vh;
+    padding-top: 15vh;
+    zoom: 0.85;
     position: relative;
     z-index: 10;
-    gap: 4rem;
-    /* Increased gap */
+}
+
+.hero-marquee-container {
+    min-height: 60px;
+    z-index: 999;
+    position: relative;
+    margin-top: 5vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.hero-marquee-content {
+    font-size: 24px;
+    color: var(--gold);
+}
+
+.hero-marquee-content span {
+    font-size: 24px;
+}
+
+.hero-bottom-image {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 5;
+    margin-top: auto;
+    margin-bottom: 45vh;
+}
+
+.hero-bottom-image img {
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    opacity: 0.95;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+    transform: translateY(-40px);
 }
 
 .hero-container.hero-centered {
@@ -1334,7 +1373,6 @@ h3 {
 
 .hero-image-container {
     flex: 1.5;
-    /* Give more room to cards */
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -1343,12 +1381,10 @@ h3 {
 }
 
 @keyframes floatProduct {
-
     0%,
     100% {
         transform: translateY(0) rotateY(-10deg) rotateX(2deg);
     }
-
     50% {
         transform: translateY(-20px) rotateY(-5deg) rotateX(-2deg);
     }
@@ -1368,7 +1404,6 @@ h3 {
 
 .hero h1 {
     font-size: clamp(2rem, 8vw, 4rem);
-    /* Slightly smaller for better fit */
     line-height: 1.1;
     margin-bottom: 2rem;
     letter-spacing: -0.04em;
@@ -1382,14 +1417,40 @@ h3 {
     }
 
     .hero {
-        padding: 100px 1.5rem 50px;
+        padding: 80px 1.5rem 20px;
         text-align: center;
+        height: auto;
+        min-height: 100vh;
     }
 
     .hero-container {
         flex-direction: column;
-        gap: 3rem;
+        gap: 2rem;
         width: 100%;
+        height: auto;
+        padding-top: 10vh;
+        zoom: 1; /* Reset zoom on mobile */
+    }
+    
+    .hero-marquee-container {
+        margin-top: 3vh;
+    }
+
+    .hero-marquee-content {
+        font-size: 16px;
+    }
+
+    .hero-marquee-content span {
+        font-size: 16px;
+    }
+
+    .hero-bottom-image {
+        margin-bottom: 2rem;
+        margin-top: 2rem;
+    }
+
+    .hero-bottom-image img {
+        transform: translateY(0);
     }
 
     .hero-content {
@@ -2018,10 +2079,25 @@ h3 {
     z-index: 2;
 }
 
+@media (max-width: 768px) {
+    .motto-glass {
+        padding: 1.5rem 2rem;
+    }
+    .motto-text {
+        font-size: 1.1rem;
+    }
+}
+
 /* --- Flavour Cards Styling --- */
 .flavours {
     padding: 100px 0;
     background-color: var(--white);
+}
+
+@media (max-width: 768px) {
+    .flavours {
+        padding: 60px 0;
+    }
 }
 
 .section-title {
@@ -2376,6 +2452,14 @@ h3 {
 .footer-links {
     flex: 1;
     min-width: 250px;
+}
+
+@media (max-width: 768px) {
+    .footer-grid {
+        flex-direction: column;
+        gap: 20px;
+        padding-bottom: 20px;
+    }
 }
 
 .footer-brand .logo {
@@ -3596,6 +3680,11 @@ h3 {
         flex: 0 0 85vw;
         max-width: 320px;
         height: auto;
+    }
+    
+    .carousel-filter-tabs {
+        flex-wrap: wrap;
+        padding-bottom: 0;
     }
 }
 
