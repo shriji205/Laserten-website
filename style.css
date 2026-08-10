@@ -502,7 +502,7 @@ h3 {
     font-style: italic;
     text-align: center;
     color: var(--gold-deep);
-    padding: 60px 0;
+    padding: 150px 0 80px; min-height: 100vh;
     position: relative;
 }
 
@@ -672,7 +672,7 @@ h3 {
     font-size: 1.2rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .key-takeaways ul {
@@ -2096,7 +2096,7 @@ h3 {
 
 @media (max-width: 768px) {
     .flavours {
-        padding: 60px 0;
+        padding: 150px 0 80px; min-height: 100vh;
     }
 }
 
@@ -2469,7 +2469,7 @@ h3 {
 
 .footer-grid h4 {
     color: #5D1F6E;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     font-size: 18px;
 }
 
@@ -2805,7 +2805,7 @@ h3 {
 
 .mv-icon {
     font-size: 40px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     display: block;
 }
 
@@ -5865,7 +5865,7 @@ textarea.form-control {
     color: #0D051A;
     padding: 5px 12px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 700;
     pointer-events: none;
     opacity: 0;
@@ -6296,7 +6296,7 @@ textarea.form-control {
     border-radius: 10px;
     font-weight: 600;
     text-decoration: none;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     transition: 0.3s;
     flex: 1;
 }
@@ -6694,7 +6694,7 @@ textarea.form-control {
     right: -20px;
     padding: 10px 20px;
     border-radius: 30px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 700;
     color: white;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
@@ -6909,7 +6909,7 @@ textarea.form-control {
     color: #000;
     padding: 0.4rem 1rem;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: 600;
     z-index: 2;
 }
@@ -7400,4 +7400,144 @@ textarea.form-control {
 }
 .timeline-node:nth-child(even).active .timeline-stem {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), transparent);
+}
+
+
+/* --- Refined Contact Section (Sober & Professional) --- */
+.contact-refined-section {
+    padding: 150px 0 80px; min-height: 100vh;
+    position: relative;
+    z-index: 20;
+    background: var(--bg-dark); /* This is the light pink background */
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: flex-start;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+
+.contact-info-refined .sober-text {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    font-weight: 400;
+    max-width: 95%;
+}
+
+.info-block-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.info-block {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.info-block .icon-wrapper {
+    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #FFF;
+    color: var(--primary);
+    border: 1px solid rgba(26, 11, 46, 0.1);
+    flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.info-block .details h4 {
+    font-size: 0.95rem;
+    color: var(--primary);
+    margin: 0 0 3px 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.info-block .details p {
+    color: var(--text-muted);
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+/* Minimalist Form Styles */
+.contact-form-refined {
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.5); /* subtle glass effect for light theme */
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+}
+
+.sober-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+@media (max-width: 600px) {
+    .sober-form .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sober-form .form-group {
+    margin-bottom: 25px;
+}
+
+.sober-form label {
+    display: block;
+    font-size: 0.85rem;
+    color: var(--primary);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.sober-form .minimal-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(26, 11, 46, 0.2);
+    padding: 10px 0;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    transition: var(--transition);
+    border-radius: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+.sober-form .minimal-input:focus {
+    outline: none;
+    border-bottom-color: var(--primary);
+    background: rgba(255, 255, 255, 0.8);
+    padding-left: 8px;
+}
+
+.sober-form .minimal-input::placeholder {
+    color: rgba(26, 11, 46, 0.4);
+}
+
+.sober-form select.minimal-input option {
+    background: #FFF;
+    color: var(--text-main);
 }
