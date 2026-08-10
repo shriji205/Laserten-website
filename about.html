@@ -88,9 +88,14 @@
 <span class="line-2 typewriter-trigger text-elevation-glow" data-texts='["INNOVATION", "TRUST", "QUALITY"]' style="font-size: clamp(1.8rem, 8vw, 4.5rem); color: #ffffff !important; font-weight: 500 !important; line-height: 1.1; letter-spacing: -1px; margin-top: 0.5rem; text-shadow: 0 10px 30px rgba(0,0,0,0.5); word-wrap: break-word;">INNOVATION</span>
 </h1>
 </div>
+<div class="timeline-container reveal" style="animation-delay: 1.5s;">
+    <div class="timeline-track" id="timelineTrack">
+        <!-- Populated by JS -->
+    </div>
+</div>
 </div>
 <!-- Scroll Down Indicator -->
-<a class="scroll-down-indicator reveal" href="#narrative" style="animation-delay: 2s; text-decoration: none;">
+<a class="scroll-down-indicator" href="#narrative" style="text-decoration: none; opacity: 0; animation: luxuryFadeIn 1s 2.5s forwards;">
 <span class="scroll-text" style="color: rgba(255,255,255,0.7); letter-spacing: 2px;">SCROLL DOWN</span>
 <div class="scroll-arrow-container">
 <div class="scroll-arrow"></div>
@@ -353,5 +358,94 @@
 <!-- Confetti Container -->
 <div class="confetti-container" id="confettiContainer"></div>
 <script src="script.js"></script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const track = document.getElementById('timelineTrack');
+    if (!track) return;
+    
+    const startYear = 1999;
+    const endYear = 2027;
+    const nodes = [];
+    
+    for (let year = startYear; year <= endYear; year++) {
+        const node = document.createElement('div');
+        node.className = 'timeline-node';
+        
+        let label = year;
+        if (year === 2027) {
+            label = "2027 &mdash;&mdash;&mdash; and further";
+            node.style.width = "400px";
+            node.style.justifyContent = "flex-start";
+            node.className = 'timeline-node final-node';
+        }
+        
+        node.innerHTML = `
+            <div class="timeline-stem"></div>
+            <div class="timeline-dot">
+                <div class="timeline-ripple"></div>
+            </div>
+            <div class="timeline-year">${label}</div>
+        `;
+        track.appendChild(node);
+        nodes.push(node);
+    }
+    
+    // JS Animation logic
+    setTimeout(() => {
+        const duration = 13000; // 13 seconds total
+        const startTime = performance.now();
+        const centerScreen = window.innerWidth / 2;
+        
+        // Wait for DOM to render the nodes so we can get width
+        const trackWidth = track.scrollWidth;
+        const startX = window.innerWidth;
+        const endX = -trackWidth + window.innerWidth * 0.6;
+        
+        function updateTimeline(time) {
+            const elapsed = time - startTime;
+            let progress = elapsed / duration;
+            if (progress > 1) progress = 1;
+            
+            // Quartic ease out: extremely fast start, very slow finish
+            // This guarantees 1999->2023 is fast, and 2023->2027 is slow
+            const easeOutQuart = 1 - Math.pow(1 - progress, 5); 
+            const currentX = startX + (endX - startX) * easeOutQuart;
+            
+            track.style.transform = `translateY(-50%) translateX(${currentX}px)`;
+            
+            // Highlight node in center
+            let closestNode = null;
+            let minDistance = Infinity;
+            
+            nodes.forEach(node => {
+                const rect = node.getBoundingClientRect();
+                const nodeCenter = rect.left + rect.width / 2;
+                const distance = Math.abs(nodeCenter - centerScreen);
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestNode = node;
+                }
+                node.classList.remove('active');
+            });
+            
+            if (closestNode && minDistance < window.innerWidth * 0.3) {
+                closestNode.classList.add('active');
+            }
+            
+            if (progress < 1) {
+                requestAnimationFrame(updateTimeline);
+            } else {
+                if (closestNode) closestNode.classList.add('active');
+            }
+        }
+        
+        requestAnimationFrame(updateTimeline);
+        
+    }, 2000); 
+});
+</script>
 </body>
 </html>
