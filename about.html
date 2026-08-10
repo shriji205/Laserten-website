@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!track) return;
     
     const startYear = 1999;
-    const endYear = 2027;
+    const endYear = 2028;
     const nodes = [];
     
     for (let year = startYear; year <= endYear; year++) {
@@ -374,12 +374,6 @@ document.addEventListener('DOMContentLoaded', function() {
         node.className = 'timeline-node';
         
         let label = year;
-        if (year === 2027) {
-            label = "2027 &mdash;&mdash;&mdash; and further";
-            node.style.width = "400px";
-            node.style.justifyContent = "flex-start";
-            node.className = 'timeline-node final-node';
-        }
         
         node.innerHTML = `
             <div class="timeline-stem"></div>
@@ -399,9 +393,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const centerScreen = window.innerWidth / 2;
         
         // Wait for DOM to render the nodes so we can get width
-        const trackWidth = track.scrollWidth;
         const startX = window.innerWidth;
-        const endX = -trackWidth + window.innerWidth * 0.6;
+        // Stop exactly on 2026 (index 27)
+        const targetNode = nodes[27];
+        const endX = centerScreen - (targetNode.offsetLeft + targetNode.offsetWidth / 2);
         
         function updateTimeline(time) {
             const elapsed = time - startTime;
