@@ -7236,3 +7236,53 @@ textarea.form-control {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
 }
+
+
+
+
+
+/* ==========================================================================
+   HERO BACKGROUND IMAGE MARQUEE LOOP - NETFLIX DIAGONAL (FIXED VISIBILITY)
+   ========================================================================== */
+.hero-image-marquee-container {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    overflow: hidden;
+    z-index: 5; /* Sit above the dark overlay so they are actually visible! */
+    opacity: 0.1; /* Decreased opacity for a subtle background effect */
+    pointer-events: none;
+    transform: rotate(-15deg); /* Diagonal rotation */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+}
+
+.hero-image-marquee-track {
+    display: flex;
+    width: 200%;
+    animation: imageMarquee 45s linear infinite;
+    align-items: center;
+}
+
+.hero-image-marquee-track:nth-child(even) {
+    animation-direction: reverse;
+}
+
+.hero-image-marquee-track img {
+    height: 300px;
+    max-height: 40vh;
+    width: auto;
+    object-fit: contain;
+    margin: 0 40px;
+    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
+    /* Removed mix-blend-mode: multiply because it made them invisible on dark backgrounds! */
+}
+
+@keyframes imageMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
