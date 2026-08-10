@@ -1680,7 +1680,7 @@ h3 {
 .brand-story {
     padding: 160px 0;
     text-align: center;
-    background: radial-gradient(circle at center, #1A0B2E 0%, #0D051A 100%);
+    background: radial-gradient(circle at center, var(--white) 0%, var(--bg-light) 100%);
     position: relative;
     overflow: hidden;
 }
@@ -1730,7 +1730,7 @@ h3 {
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
     letter-spacing: 0.4em;
-    color: var(--gold-luminous);
+    color: var(--gold-deep);
     text-transform: uppercase;
     margin-bottom: 1.5rem;
     opacity: 0.9;
@@ -1739,7 +1739,7 @@ h3 {
 .brand-story .story-text {
     font-size: 1.35rem;
     line-height: 1.8;
-    color: var(--white);
+    color: var(--text-main);
     opacity: 0.85;
     max-width: 800px;
     margin: 0 auto 4rem;
@@ -1751,7 +1751,7 @@ h3 {
     font-family: 'Playfair Display', serif;
     font-style: italic;
     font-size: 1.8rem;
-    color: var(--gold-bright);
+    color: var(--gold-deep);
     margin-top: 3rem;
     opacity: 0.8;
     position: relative;
@@ -5691,8 +5691,8 @@ textarea.form-control {
 
 /* --- Luxury Massage Oil Overhaul --- */
 .luxury-oil-page {
-    background-color: #0D051A;
-    color: var(--white);
+    background-color: var(--white);
+    color: var(--text-main);
 }
 
 .oil-hero {
@@ -5702,7 +5702,7 @@ textarea.form-control {
     justify-content: center;
     position: relative;
     overflow: hidden;
-    background: radial-gradient(circle at center, #1A0B2E 0%, #0D051A 100%);
+    background: radial-gradient(circle at center, var(--white) 0%, var(--bg-light) 100%);
 }
 
 .oil-hero-bg {
@@ -5754,7 +5754,7 @@ textarea.form-control {
 
 .oil-motto {
     font-size: 1.5rem;
-    color: var(--gold-luminous);
+    color: var(--gold-deep);
     letter-spacing: 4px;
     text-transform: uppercase;
     margin-bottom: 3rem;
@@ -5773,7 +5773,7 @@ textarea.form-control {
 /* --- Interactive Body Map --- */
 .body-map-section {
     padding: 100px 0;
-    background: #0D051A;
+    background: var(--bg-light);
 }
 
 .body-map-container {
@@ -5886,9 +5886,9 @@ textarea.form-control {
 }
 
 .virtue-card {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #FFFFFF;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(197, 160, 89, 0.2);
     padding: 3rem;
     border-radius: 30px;
     transition: 0.5s cubic-bezier(0.23, 1, 0.32, 1);
@@ -5897,16 +5897,17 @@ textarea.form-control {
 }
 
 .virtue-card:hover {
-    background: rgba(197, 160, 89, 0.1);
+    background: var(--bg-light);
     border-color: var(--gold);
     transform: translateY(-15px) scale(1.02);
+    box-shadow: var(--shadow-hover);
 }
 
 .virtue-num {
     font-family: 'Playfair Display', serif;
     font-size: 8rem;
     color: var(--gold);
-    opacity: 0.05;
+    opacity: 0.15;
     position: absolute;
     bottom: -20px;
     right: -10px;
@@ -5916,7 +5917,7 @@ textarea.form-control {
 .virtue-card h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
-    color: var(--gold-bright);
+    color: var(--gold-deep);
 }
 
 .virtue-card p {
@@ -5928,7 +5929,7 @@ textarea.form-control {
 /* --- Alchemical Ingredients --- */
 .alchemy-section {
     padding: 120px 0;
-    background: radial-gradient(circle at top, #1A0B2E 0%, #0D051A 100%);
+    background: radial-gradient(circle at top, var(--white) 0%, var(--bg-light) 100%);
 }
 
 .alchemy-list {
@@ -5972,7 +5973,7 @@ textarea.form-control {
 .alchemy-item h4 {
     font-family: 'Playfair Display', serif;
     font-size: 1.3rem;
-    color: var(-- gold-luminous);
+    color: var(--text-main);
 }
 
 @media (max-width: 768px) {
@@ -6033,7 +6034,8 @@ textarea.form-control {
 
 .body-visual-master {
     position: relative;
-    width: 450px;
+    width: 100%;
+    max-width: 450px;
     height: 650px;
     background: radial-gradient(circle, rgba(197, 160, 89, 0.05) 0%, transparent 80%);
     border: 1px solid rgba(197, 160, 89, 0.1);
@@ -6066,9 +6068,9 @@ textarea.form-control {
 .detail-panel {
     width: 350px;
     height: 350px;
-    background: rgba(255, 255, 255, 0.03);
+    background: #FFFFFF;
     backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(197, 160, 89, 0.2);
     border-radius: 30px;
     padding: 3rem;
     display: flex;
@@ -6078,13 +6080,14 @@ textarea.form-control {
     opacity: 0.5;
     transform: translateX(50px);
     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: var(--shadow-soft);
 }
 
 .detail-panel.active {
     opacity: 1;
     transform: translateX(0);
     border-color: var(--gold);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    box-shadow: var(--shadow-hover);
 }
 
 .panel-icon {
